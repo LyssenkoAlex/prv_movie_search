@@ -1,7 +1,7 @@
+import {getOMDBInfo} from "./api/omdb";
 
 
-
-const init = () => {
+const   init = async () => {
     let swiper = new Swiper('.swiper-container', {
         slidesPerView: 3,
         spaceBetween: 30,
@@ -10,6 +10,8 @@ const init = () => {
             clickable: true,
         },
     });
+    let g = await getOMDBInfo('dream');
+    console.log('g: ', g)
 }
 
 init();
