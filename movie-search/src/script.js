@@ -10,16 +10,9 @@ const init = async () => {
 
 const fillSliders = (movieArray) => {
 	if (movieArray.Response === 'True') {
-		console.log('movieArray: ', movieArray);
-		let el = document.getElementsByClassName('swiper-wrapper')[0];
 
 		movieArray.Search.forEach((x) => {
-			let sliderDiv = document.createElement('div');
-			sliderDiv.classList.add('swiper-slide');
-			let sliderTitle = document.createElement('span');
-			sliderTitle.innerText = x.Title;
-			sliderDiv.append(sliderTitle);
-			el.append(sliderDiv);
+            createSlide(x)
 		});
 	}
 };
@@ -37,4 +30,19 @@ const startSlider = async () => {
 	console.log('t', t);
 };
 
+const createSlide =(movie) => {
+    console.log('movie', movie)
+    let el = document.querySelector('.swiper-wrapper');
+    let sliderDiv = document.createElement('div');
+    sliderDiv.classList.add('swiper-slide');
+    let sliderTitle = document.createElement('span');
+    sliderTitle.innerText = movie.Title;
+    let img = document.createElement("IMG");
+    img.setAttribute("src", movie.Poster);
+    img.setAttribute("alt", movie.Title);
+    sliderDiv.append(sliderTitle);
+    sliderDiv.append(img)
+    el.append(sliderDiv);
+
+}
 init();
