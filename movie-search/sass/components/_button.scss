@@ -1,0 +1,59 @@
+button {
+  background-color: #eee;
+  border: 0;
+  border-radius: 0.125em;
+  box-shadow: -0.2em 0 0.125em rgba(0, 0, 0, 0.25),
+  0 0 0 0.04em rgba(0, 0, 0, 0.3),
+  0.02em 0.02em 0.02em rgba(0, 0, 0, 0.4) inset,
+  -0.05em -0.05em 0.02em rgba(255, 255, 255, 0.8) inset;
+  color: #777;
+  font-size: 1em;
+  outline: 0;
+  vertical-align: top;
+  &:hover {
+    opacity: 0.6;
+  }
+
+  &:not(:last-of-type) {
+    margin-right: 0.35em;
+  }
+
+  & > span {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.btn0 {
+  width: 1.19em;
+  height: 0.75em;
+}
+
+.btn_middle {
+  width: 2em;
+  height: 0.75em;
+}
+
+.btn_middle_x {
+  width: 2.2em;
+  height: 0.75em;
+}
+
+.btn_middle_xx {
+  width: 2.5em;
+  height: 0.75em;
+}
+
+.btn_extra_large {
+  width: 12em;
+  height: 0.75em;
+}
+.sm {
+  font-size: 0.4em;
+  line-height: 1.25;
+}
+
+.press_down_button {
+  opacity: 0.6;
+}
+

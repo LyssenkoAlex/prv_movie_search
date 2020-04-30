@@ -1,0 +1,10 @@
+.keyboard {
+  background-image: linear-gradient(90deg, #888, #ccc);
+  border-radius: 0.5em;
+  box-shadow: -1em 0 1.5em rgba(0, 0, 0, 0.6), 0 0 0 1px #aaa inset;
+  display: grid;
+  grid-template-columns:  1fr;
+  grid-gap: 0.375em 0.875em;
+  font-size: 2.8em;
+  padding: 0.25em;
+}
