@@ -3530,7 +3530,7 @@ body {
 .wrapper {
   margin: auto;
   width: 1025px;
-  padding-top: 4em;
+  padding-top: 0.5em;
 }
 
 .area_wrapper {
