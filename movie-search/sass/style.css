@@ -3529,7 +3529,7 @@ body {
 
 .wrapper {
   margin: auto;
-  width: 1025px;
+  width: 95%;
   padding-top: 0.5em;
 }
 
@@ -3611,6 +3611,19 @@ button > span {
 
 .note {
   text-align: center;
+}
+
+.swiper-container {
+  padding-bottom: 50px;
+}
+
+.swiper-pagination {
+  bottom: 6px;
+}
+
+.swiper-pagination-bullet {
+  width: 20px;
+  height: 20px;
 }
 
 /*# sourceMappingURL=style.css.map */
