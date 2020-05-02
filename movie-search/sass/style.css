@@ -3551,6 +3551,14 @@ body {
 }
 
 button {
+  margin-left: 10px;
+}
+
+.foundItems {
+  margin-left: 10px;
+}
+
+button {
   background-color: #eee;
   border: 0;
   border-radius: 0.125em;

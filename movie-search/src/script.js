@@ -3,15 +3,45 @@ import { getYandexTranslateURL } from './api/translate';
 import { LANGUAGE } from './constraints';
 
 let CURRENT_PAGE = 1;
+let swiper;
 
-const init = async () => {
-	let movies = await getOMDBInfo({ title: 'rabbit', page: CURRENT_PAGE });
-	await startSlider(movies);
+const inputTitle = document.getElementById('paperInputs1');
+const buttonSearch = document.getElementById('buttonSearch');
+const fountTotal = document.querySelector('.foundItems');
+
+const init = async (title) => {
+	console.log('title', title)
+	let movies = await getOMDBInfo({ title: title, page: CURRENT_PAGE });
+	await startSlider(movies, title);
+	cursorPosition();
+	console.log('fountTotal', fountTotal)
+	fountTotal.innerHTML = movies.totalResults;
 };
+const cursorPosition = () => {
+	const  setCaretPosition = (ctrl, pos) => {
+		// Modern browsers
+		if (ctrl.setSelectionRange) {
+			ctrl.focus();
+			ctrl.setSelectionRange(pos, pos);
 
-const startSlider = async (movies) => {
-	console.log('movies: ', movies.Search);
-	let swiper = new Swiper('.swiper-container', {
+			// IE8 and below
+		} else if (ctrl.createTextRange) {
+			let range = ctrl.createTextRange();
+			range.collapse(true);
+			range.moveEnd('character', pos);
+			range.moveStart('character', pos);
+			range.select();
+		}
+	}
+
+	let input = document.getElementById('paperInputs1');
+	setCaretPosition(input, input.value.length);
+}
+
+const startSlider = async (movies, title) => {
+	console.log('movies: ', movies);
+
+	 swiper = new Swiper('.swiper-container', {
 		slidesPerView: 5,
 		spaceBetween: 50,
 		updateOnWindowResize: true,
@@ -31,14 +61,16 @@ const startSlider = async (movies) => {
 			prevEl: '.swiper-button-prev'
 		},
 		virtual: {
+			cache: false,
 			slides: (function () {
 				return createSlides(movies);
 			})()
 		}
 	});
 
+
 	swiper.on('reachEnd', async () => {
-		let movies = await getOMDBInfo({ title: 'rabbit', page: ++CURRENT_PAGE });
+		let movies = await getOMDBInfo({ title: title, page: ++CURRENT_PAGE });
 		swiper.virtual.appendSlide(createSlides(movies));
 	});
 };
@@ -60,4 +92,18 @@ const createSlides = (movies) => {
 	}
 	return slides;
 };
-init();
+init('rabbit');
+
+
+
+inputTitle.addEventListener('keypress', (e) => {
+	if (e.key  === 'Enter') {
+		swiper.removeAllSlides();
+		init(inputTitle.value)
+	}
+})
+
+buttonSearch.addEventListener('click', (e) => {
+	swiper.removeAllSlides();
+	init(inputTitle.value);
+})

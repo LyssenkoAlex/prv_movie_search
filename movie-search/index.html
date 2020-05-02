@@ -18,15 +18,21 @@
 			<div class="form-group">
 				<div class="row">
 					<label for="paperInputs1">Input</label>
-					<input type="text" placeholder="Enter movie title" id="paperInputs1" />
+					<input type="text" placeholder="Enter movie title" id="paperInputs1">
+                    <button class="btn-small" id="buttonSearch">Search</button>
+
 					<label for="paperChecks1" class="paper-check">
 						<input type="checkbox" name="paperChecks" id="paperChecks1" value="option 1" /> <span>RU</span>
 					</label>
 					<label for="paperChecks2" class="paper-check">
 						<input type="checkbox" name="paperChecks" id="paperChecks2" value="option 2" /> <span>ENG</span>
 					</label>
+					<h4>
+						<span>Found: </span><span class="foundItems"></span>
+					</h4>
 				</div>
 			</div>
+
 			<div class="swiper-container">
 				<div class="swiper-wrapper"></div>
 				<!-- Add Pagination -->
