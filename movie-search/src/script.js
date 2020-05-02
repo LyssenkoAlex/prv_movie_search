@@ -9,15 +9,6 @@ const init = async () => {
 	await startSlider(movies);
 };
 
-const fillSliders = (movieArray) => {
-	if (movieArray.Response === 'True') {
-		console.log('movieArray', movieArray);
-		movieArray.Search.forEach((x) => {
-			createSlide(x);
-		});
-	}
-};
-
 const startSlider = async (movies) => {
 	console.log('movies: ', movies.Search);
 	let swiper = new Swiper('.swiper-container', {
@@ -45,30 +36,28 @@ const startSlider = async (movies) => {
 			})()
 		}
 	});
-	let y = swiper.slideNext();
+
 	swiper.on('reachEnd', async () => {
 		let movies = await getOMDBInfo({ title: 'rabbit', page: ++CURRENT_PAGE });
 		swiper.virtual.appendSlide(createSlides(movies));
 	});
 };
 
-const loadNextSlides = async (page) => {
-	let movies = await getOMDBInfo({ title: 'rabbit', page: page });
-	await fillSliders(movies);
-};
+
 
 const createSlides = (movies) => {
 	let slides = [];
-
-    for (let i = 0; i < movies.Search.length; i += 1) {
-        slides.push(`
-                            <div class="card">
-                            <img src="${movies.Search[i].Poster}" alt="${movies.Search[i].Title}"/>
-                            <h5>${movies.Search[i].Title}</h5>
-                            </div>
-                                `);
-    }
-    return slides;
-
+	for (let i = 0; i < movies.Search.length; i += 1) {
+		slides.push(`
+	            <div class="card">
+	            <img src="${movies.Search[i].Poster}" alt="${movies.Search[i].Title}"/>
+	            <div class="card-body">
+	                <a class="paper-btn btn-secondary" href="https://www.imdb.com/title/${movies.Search[i].imdbID}" target="_blank">${movies.Search[i].Title}</a>
+	                <h5 class="card-subtitle">${movies.Search[i].Type} ${movies.Search[i].Year}</h5>
+	            </div>
+	            </div>
+	                `);
+	}
+	return slides;
 };
 init();
