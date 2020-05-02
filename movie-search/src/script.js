@@ -10,15 +10,15 @@ const buttonSearch = document.getElementById('buttonSearch');
 const fountTotal = document.querySelector('.foundItems');
 
 const init = async (title) => {
-	console.log('title', title)
+	console.log('init', title);
 	let movies = await getOMDBInfo({ title: title, page: CURRENT_PAGE });
 	await startSlider(movies, title);
 	cursorPosition();
-	console.log('fountTotal', fountTotal)
+	console.log('fountTotal', fountTotal);
 	fountTotal.innerHTML = movies.totalResults;
 };
 const cursorPosition = () => {
-	const  setCaretPosition = (ctrl, pos) => {
+	const setCaretPosition = (ctrl, pos) => {
 		// Modern browsers
 		if (ctrl.setSelectionRange) {
 			ctrl.focus();
@@ -32,29 +32,30 @@ const cursorPosition = () => {
 			range.moveStart('character', pos);
 			range.select();
 		}
-	}
+	};
 
 	let input = document.getElementById('paperInputs1');
 	setCaretPosition(input, input.value.length);
-}
+};
 
 const startSlider = async (movies, title) => {
-	console.log('movies: ', movies);
+	console.log('startSlider: ', movies, 'title: ', title);
 
-	 swiper = new Swiper('.swiper-container', {
-		slidesPerView: 5,
+	swiper = new Swiper('.swiper-container', {
+		slidesPerView: 4,
 		spaceBetween: 50,
+		speed: 400,
+		watchSlidesVisibility: true,
+		preloadImages: false,
 		updateOnWindowResize: true,
+		lazy: {
+			loadPrevNext: true,
+			loadPrevNextAmount: 3,
+			loadOnTransitionStart: true
+		},
 		pagination: {
 			el: '.swiper-pagination',
-			clickable: true,
-			dynamicBullets: true,
-			dynamicMainBullets: true,
-			type: 'fraction',
-			renderFraction: function (currentClass, totalClass) {
-				console.log('totalClass', totalClass);
-				return '<span class="' + currentClass + '"></span>' + ' of ' + '<span class="' + totalClass + '"></span>';
-			}
+			type: 'fraction'
 		},
 		navigation: {
 			nextEl: '.swiper-button-next',
@@ -68,14 +69,20 @@ const startSlider = async (movies, title) => {
 		}
 	});
 
-
 	swiper.on('reachEnd', async () => {
+		console.log('reachEnd: ', inputTitle.value);
+		if (inputTitle.value === null) {
+			title = 'rabbit';
+		} else {
+			title = inputTitle.value;
+		}
 		let movies = await getOMDBInfo({ title: title, page: ++CURRENT_PAGE });
-		swiper.virtual.appendSlide(createSlides(movies));
+		console.log('reachEnd: ', movies);
+		swiper.virtual.slides = [];
+		swiper.virtual.slides = createSlides(movies);
+		swiper.virtual.update(true);
 	});
 };
-
-
 
 const createSlides = (movies) => {
 	let slides = [];
@@ -94,16 +101,16 @@ const createSlides = (movies) => {
 };
 init('rabbit');
 
-
-
-inputTitle.addEventListener('keypress', (e) => {
-	if (e.key  === 'Enter') {
-		swiper.removeAllSlides();
-		init(inputTitle.value)
+inputTitle.addEventListener('keypress', async (e) => {
+	if (e.key === 'Enter') {
+		let movies = await getOMDBInfo({ title: inputTitle.value, page: ++CURRENT_PAGE });
+		console.log('keypress: ', movies);
+		swiper.virtual.slides = [];
+		swiper.virtual.slides = createSlides(movies);
+		swiper.virtual.update(true);
 	}
-})
+});
 
 buttonSearch.addEventListener('click', (e) => {
-	swiper.removeAllSlides();
 	init(inputTitle.value);
-})
+});

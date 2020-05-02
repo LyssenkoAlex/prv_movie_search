@@ -3529,7 +3529,7 @@ body {
 
 .wrapper {
   margin: auto;
-  width: 95%;
+  width: 85%;
   padding-top: 0.5em;
 }
 
@@ -3554,7 +3554,7 @@ button {
   margin-left: 10px;
 }
 
-.foundItems {
+.fondWrapper {
   margin-left: 10px;
 }
 
@@ -3623,6 +3623,8 @@ button > span {
 
 .swiper-container {
   padding-bottom: 50px;
+  padding-left: 50px;
+  padding-right: 50px;
 }
 
 .swiper-pagination {
