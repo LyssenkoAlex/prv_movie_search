@@ -70,12 +70,13 @@ const startSlider = async (movies, title) => {
 	});
 
 	swiper.on('reachEnd', async () => {
-		console.log('reachEnd: ', inputTitle.value);
-		if (inputTitle.value === null) {
+		if (inputTitle.value === '') {
 			title = 'rabbit';
 		} else {
 			title = inputTitle.value;
 		}
+		console.log('reachEnd: ', title);
+
 		let movies = await getOMDBInfo({ title: title, page: ++CURRENT_PAGE });
 		console.log('reachEnd: ', movies);
 		swiper.virtual.slides = [];
