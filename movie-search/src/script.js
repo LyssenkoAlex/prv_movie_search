@@ -1,6 +1,6 @@
 import { getOMDBInfo, getOMDBRating } from './api/omdb';
 import { getYandexTranslateURL } from './api/translate';
-import { LANGUAGE } from './constraints';
+
 
 let CURRENT_PAGE = 1;
 let swiper;
@@ -12,33 +12,35 @@ const clearButton = document.querySelector('.clearButton');
 
 const loader = document.querySelector('.loader');
 const ok = document.querySelector('.okWrapper');
-const not_found =  document.querySelector('.not_found');
-
+const not_found = document.querySelector('.not_found');
 
 const loaderUpdate = (okDisp, loaderDisp) => {
 	ok.style.display = okDisp;
 	loader.style.display = loaderDisp;
-}
+};
 
 const fillImdRating = async (movies) => {
-
-	for(let i = 0; i < movies.Search.length; i++) {
-		let raiting = await getOMDBRating({imdbID:movies.Search[i].imdbID});
-		console.log('raiting', raiting)
+	for (let i = 0; i < movies.Search.length; i++) {
+		let raiting = await getOMDBRating({ imdbID: movies.Search[i].imdbID });
+		console.log('raiting', raiting);
 		movies.Search[i].imdbRating = raiting.imdbRating;
 	}
- }
+};
 
 const init = async (title) => {
 	console.log('init', title);
 	loaderUpdate('none', 'block');
 	let movies = await getOMDBInfo({ title: title, page: CURRENT_PAGE });
-	await fillImdRating(movies);
-	await startSlider(movies, title);
-	cursorPosition();
-	console.log('fountTotal', fountTotal);
-	fountTotal.innerHTML = movies.totalResults;
-	loaderUpdate('block', 'none');
+	if (movies.Search.length > 0) {
+		await fillImdRating(movies);
+		await startSlider(movies, title);
+		cursorPosition();
+		console.log('fountTotal', fountTotal);
+		fountTotal.innerHTML = movies.totalResults;
+		loaderUpdate('block', 'none');
+	} else {
+		not_found.innerHTML = 'Nothing found!';
+	}
 };
 const cursorPosition = () => {
 	const setCaretPosition = (ctrl, pos) => {
@@ -132,38 +134,48 @@ const createSlides = (movies) => {
 };
 init('rabbit');
 
-inputTitle.addEventListener('keypress', async (e) => {
-	if (e.key === 'Enter') {
-		loaderUpdate('none', 'block');
-		console.log('enter: ', inputTitle.value);
-		CURRENT_PAGE = 1;
-		let movies = await getOMDBInfo({ title: inputTitle.value, page: CURRENT_PAGE });
+const searchTitle = async () => {
+	loaderUpdate('none', 'block');
+	console.log('enter: ', inputTitle.value);
+	CURRENT_PAGE = 1;
+	let translation = await getYandexTranslateURL({text:inputTitle.value});
+	let translatedWord = translation.text[0];
+	console.log('translation', translation)
+	let movies = await getOMDBInfo({ title: translatedWord, page: CURRENT_PAGE });
+	if (movies.Search !== undefined && movies.Search.length > 0) {
 		await fillImdRating(movies);
 		console.log('keypress: ', movies);
 		swiper.virtual.slides = [];
 		swiper.virtual.slides = createSlides(movies);
 		swiper.virtual.update(true);
 		loaderUpdate('block', 'none');
+	} else {
+
+		not_found.innerHTML = 'Nothing found!';
+		fountTotal.innerHTML = '0';
+		swiper.virtual.slides = [];
+		swiper.virtual.update(true);
+		loaderUpdate('none', 'none');
+
+	}
+};
+
+inputTitle.addEventListener('keypress', async (e) => {
+	if (e.key === 'Enter') {
+		await searchTitle();
 	}
 });
 
 buttonSearch.addEventListener('click', async (e) => {
 	CURRENT_PAGE = 1;
-	loaderUpdate('none', 'block');
-	let movies = await getOMDBInfo({ title: inputTitle.value, page: CURRENT_PAGE });
-	await fillImdRating(movies);
-	console.log('keypress: ', movies);
-	swiper.virtual.slides = [];
-	swiper.virtual.slides = createSlides(movies);
-	swiper.virtual.update(true);
-	loaderUpdate('block', 'none');
+	await searchTitle();
 });
 
 inputTitle.addEventListener('keyup', (e) => {
-	clearButton.style.visibility = (inputTitle.value.length) ? "visible" : "hidden";
-})
+	clearButton.style.visibility = inputTitle.value.length ? 'visible' : 'hidden';
+});
 
 clearButton.addEventListener('click', (e) => {
-	clearButton.style.visibility = "hidden";
-	inputTitle.value = "";
-})
+	clearButton.style.visibility = 'hidden';
+	inputTitle.value = '';
+});
