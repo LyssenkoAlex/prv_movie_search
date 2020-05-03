@@ -1,4 +1,4 @@
-import { getOMDBInfo } from './api/omdb';
+import { getOMDBInfo, getOMDBRating } from './api/omdb';
 import { getYandexTranslateURL } from './api/translate';
 import { LANGUAGE } from './constraints';
 
@@ -9,13 +9,34 @@ const inputTitle = document.getElementById('paperInputs1');
 const buttonSearch = document.getElementById('buttonSearch');
 const fountTotal = document.querySelector('.foundItems');
 
+const loader = document.querySelector('.loader');
+const ok = document.querySelector('.okWrapper');
+
+
+const loaderUpdate = (okDisp, loaderDisp) => {
+	ok.style.display = okDisp;
+	loader.style.display = loaderDisp;
+}
+
+const fillImdRating = async (movies) => {
+
+	for(let i = 0; i < movies.Search.length; i++) {
+		let raiting = await getOMDBRating({imdbID:movies.Search[i].imdbID});
+		console.log('raiting', raiting)
+		movies.Search[i].imdbRating = raiting.imdbRating;
+	}
+ }
+
 const init = async (title) => {
 	console.log('init', title);
+	loaderUpdate('none', 'block');
 	let movies = await getOMDBInfo({ title: title, page: CURRENT_PAGE });
+	await fillImdRating(movies);
 	await startSlider(movies, title);
 	cursorPosition();
 	console.log('fountTotal', fountTotal);
 	fountTotal.innerHTML = movies.totalResults;
+	loaderUpdate('block', 'none');
 };
 const cursorPosition = () => {
 	const setCaretPosition = (ctrl, pos) => {
@@ -77,13 +98,15 @@ const startSlider = async (movies, title) => {
 			title = inputTitle.value;
 		}
 		console.log('reachEnd: ', title);
-
+		loaderUpdate('none', 'block');
 		let movies = await getOMDBInfo({ title: title, page: ++CURRENT_PAGE });
+		await fillImdRating(movies);
 		console.log('reachEnd: ', movies);
 		swiper.virtual.slides = [];
 		swiper.virtual.slides = createSlides(movies);
 		swiper.virtual.update(true);
 		swiper.slideTo(1, 0);
+		loaderUpdate('block', 'none');
 	});
 };
 
@@ -97,6 +120,7 @@ const createSlides = (movies) => {
 					<div class="card-body">
 						<a class="paper-btn btn-secondary" href="https://www.imdb.com/title/${movies.Search[i].imdbID}" target="_blank">${movies.Search[i].Title}</a>
 						<h5 class="card-subtitle">${movies.Search[i].Type} ${movies.Search[i].Year}</h5>
+						<h5 class="card-subtitle">Rating: ${movies.Search[i].imdbRating}</h5>
 					</div>
 					</div>
 	            </div>
@@ -108,15 +132,29 @@ init('rabbit');
 
 inputTitle.addEventListener('keypress', async (e) => {
 	if (e.key === 'Enter') {
+		loaderUpdate('none', 'block');
 		console.log('enter: ', inputTitle.value);
-		let movies = await getOMDBInfo({ title: inputTitle.value, page: ++CURRENT_PAGE });
+		CURRENT_PAGE = 1;
+		let movies = await getOMDBInfo({ title: inputTitle.value, page: CURRENT_PAGE });
+		await fillImdRating(movies);
 		console.log('keypress: ', movies);
 		swiper.virtual.slides = [];
 		swiper.virtual.slides = createSlides(movies);
 		swiper.virtual.update(true);
+		loaderUpdate('block', 'none');
 	}
 });
 
-buttonSearch.addEventListener('click', (e) => {
-	init(inputTitle.value);
+buttonSearch.addEventListener('click', async (e) => {
+	CURRENT_PAGE = 1;
+	loaderUpdate('none', 'block');
+	let movies = await getOMDBInfo({ title: inputTitle.value, page: CURRENT_PAGE });
+	await fillImdRating(movies);
+	console.log('keypress: ', movies);
+	swiper.virtual.slides = [];
+	swiper.virtual.slides = createSlides(movies);
+	swiper.virtual.update(true);
+	loaderUpdate('block', 'none');
 });
+
+
