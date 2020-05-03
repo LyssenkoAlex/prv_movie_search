@@ -55,7 +55,7 @@ const startSlider = async (movies, title) => {
 		},
 		pagination: {
 			el: '.swiper-pagination',
-			type: 'fraction'
+			type: 'bullets'
 		},
 		navigation: {
 			nextEl: '.swiper-button-next',
@@ -68,6 +68,7 @@ const startSlider = async (movies, title) => {
 			})()
 		}
 	});
+	swiper.virtual.update(true);
 
 	swiper.on('reachEnd', async () => {
 		if (inputTitle.value === '') {
@@ -82,6 +83,7 @@ const startSlider = async (movies, title) => {
 		swiper.virtual.slides = [];
 		swiper.virtual.slides = createSlides(movies);
 		swiper.virtual.update(true);
+		swiper.slideTo(1, 0);
 	});
 };
 
@@ -89,12 +91,14 @@ const createSlides = (movies) => {
 	let slides = [];
 	for (let i = 0; i < movies.Search.length; i += 1) {
 		slides.push(`
-	            <div class="card">
-	            <img src="${movies.Search[i].Poster}" alt="${movies.Search[i].Title}"/>
-	            <div class="card-body">
-	                <a class="paper-btn btn-secondary" href="https://www.imdb.com/title/${movies.Search[i].imdbID}" target="_blank">${movies.Search[i].Title}</a>
-	                <h5 class="card-subtitle">${movies.Search[i].Type} ${movies.Search[i].Year}</h5>
-	            </div>
+				<div class="swiper-slide">
+					<div class="card">
+					<img src="${movies.Search[i].Poster}" alt="${movies.Search[i].Title}"/>
+					<div class="card-body">
+						<a class="paper-btn btn-secondary" href="https://www.imdb.com/title/${movies.Search[i].imdbID}" target="_blank">${movies.Search[i].Title}</a>
+						<h5 class="card-subtitle">${movies.Search[i].Type} ${movies.Search[i].Year}</h5>
+					</div>
+					</div>
 	            </div>
 	                `);
 	}
@@ -104,6 +108,7 @@ init('rabbit');
 
 inputTitle.addEventListener('keypress', async (e) => {
 	if (e.key === 'Enter') {
+		console.log('enter: ', inputTitle.value);
 		let movies = await getOMDBInfo({ title: inputTitle.value, page: ++CURRENT_PAGE });
 		console.log('keypress: ', movies);
 		swiper.virtual.slides = [];
