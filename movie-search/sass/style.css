@@ -3597,6 +3597,28 @@ button {
   margin-left: 10px;
 }
 
+.text-input-wrapper {
+  border: 1px solid;
+  padding: 1px 6px 1px 1px;
+  display: inline-block;
+}
+
+.text-input-wrapper input {
+  border: none;
+  background: none;
+  outline: none;
+  padding: 0 0;
+  margin: 0 0;
+  font: inherit;
+}
+
+.text-input-wrapper span {
+  cursor: pointer;
+  color: blue;
+  font-weight: bold;
+  visibility: hidden;
+}
+
 button {
   background-color: #eee;
   border: 0;
