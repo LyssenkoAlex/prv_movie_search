@@ -8,9 +8,11 @@ let swiper;
 const inputTitle = document.getElementById('paperInputs1');
 const buttonSearch = document.getElementById('buttonSearch');
 const fountTotal = document.querySelector('.foundItems');
+const clearButton = document.querySelector('.clearButton');
 
 const loader = document.querySelector('.loader');
 const ok = document.querySelector('.okWrapper');
+const not_found =  document.querySelector('.not_found');
 
 
 const loaderUpdate = (okDisp, loaderDisp) => {
@@ -157,4 +159,11 @@ buttonSearch.addEventListener('click', async (e) => {
 	loaderUpdate('block', 'none');
 });
 
+inputTitle.addEventListener('keyup', (e) => {
+	clearButton.style.visibility = (inputTitle.value.length) ? "visible" : "hidden";
+})
 
+clearButton.addEventListener('click', (e) => {
+	clearButton.style.visibility = "hidden";
+	inputTitle.value = "";
+})
