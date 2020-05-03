@@ -1,7 +1,6 @@
 import { getOMDBInfo, getOMDBRating } from './api/omdb';
 import { getYandexTranslateURL } from './api/translate';
 
-
 let CURRENT_PAGE = 1;
 let swiper;
 
@@ -101,16 +100,7 @@ const startSlider = async (movies, title) => {
 		} else {
 			title = inputTitle.value;
 		}
-		console.log('reachEnd: ', title);
-		loaderUpdate('none', 'block');
-		let movies = await getOMDBInfo({ title: title, page: ++CURRENT_PAGE });
-		await fillImdRating(movies);
-		console.log('reachEnd: ', movies);
-		swiper.virtual.slides = [];
-		swiper.virtual.slides = createSlides(movies);
-		swiper.virtual.update(true);
-		swiper.slideTo(1, 0);
-		loaderUpdate('block', 'none');
+		await searchTitle('PROCEED');
 	});
 };
 
@@ -134,41 +124,45 @@ const createSlides = (movies) => {
 };
 init('rabbit');
 
-const searchTitle = async () => {
+const searchTitle = async (searchType) => {
 	loaderUpdate('none', 'block');
 	console.log('enter: ', inputTitle.value);
-	CURRENT_PAGE = 1;
-	let translation = await getYandexTranslateURL({text:inputTitle.value});
+	searchType === 'PROCEED' ? ++CURRENT_PAGE : CURRENT_PAGE = 1;
+	let title = '';
+	inputTitle.value === '' ? (title = 'rabbit') : (title = inputTitle.value);
+	let translation = await getYandexTranslateURL({ text: title });
 	let translatedWord = translation.text[0];
-	console.log('translation', translation)
+	console.log('translation', translation);
 	let movies = await getOMDBInfo({ title: translatedWord, page: CURRENT_PAGE });
 	if (movies.Search !== undefined && movies.Search.length > 0) {
+		console.log('fillImdRating!!');
 		await fillImdRating(movies);
 		console.log('keypress: ', movies);
 		swiper.virtual.slides = [];
 		swiper.virtual.slides = createSlides(movies);
 		swiper.virtual.update(true);
+		if (searchType === 'PROCEED') {
+			swiper.slideTo(1, 0);
+		}
 		loaderUpdate('block', 'none');
 	} else {
-
 		not_found.innerHTML = 'Nothing found!';
 		fountTotal.innerHTML = '0';
 		swiper.virtual.slides = [];
 		swiper.virtual.update(true);
 		loaderUpdate('none', 'none');
-
 	}
 };
 
 inputTitle.addEventListener('keypress', async (e) => {
 	if (e.key === 'Enter') {
-		await searchTitle();
+		await searchTitle('NEW');
 	}
 });
 
 buttonSearch.addEventListener('click', async (e) => {
 	CURRENT_PAGE = 1;
-	await searchTitle();
+	await searchTitle('NEW');
 });
 
 inputTitle.addEventListener('keyup', (e) => {
