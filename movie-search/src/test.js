@@ -1,9 +1,18 @@
 
+let promise = new Promise((resolve, reject) => {
+    setTimeout(() => resolve("готово!"), 2000)
+});
 
-let h = [{a:'ml', n:'n1'}, {a:'a1', n:'n2'}];
+let promise2 = new Promise((resolve, reject) => {
+    setTimeout(() => resolve("готово!"), 2)
+});
 
 
-console.log(h)
+const h = async() => {
+    let d = await promise;
+    let d2 = await promise2;
+    console.log('d: ', d);
+    console.log('d2', d);
+}
 
-let j = h.find((x) => x.a === 'ml');
-console.log(j.n)
+h();

@@ -1,5 +1,6 @@
 import { getOMDBInfo, getOMDBRating } from './api/omdb';
 import { getYandexTranslateURL } from './api/translate';
+import {OMDB_URL} from "./constraints";
 
 let CURRENT_PAGE = 1;
 let swiper;
@@ -19,11 +20,20 @@ const loaderUpdate = (okDisp, loaderDisp) => {
 };
 
 const fillImdRating = async (movies) => {
-	for (let i = 0; i < movies.Search.length; i++) {
-		let raiting = await getOMDBRating({ imdbID: movies.Search[i].imdbID });
-		console.log('raiting', raiting);
-		movies.Search[i].imdbRating = raiting.imdbRating;
-	}
+	let ratingURl =  movies.Search.map((movie) => (OMDB_URL + 'i=' + movie.imdbID));
+	let ratingResp = await Promise.all(ratingURl.map( async rating => {
+		let response = await fetch(rating);
+		return response.json();
+	}));
+
+	ratingResp.forEach((x) => {
+		console.log('x: ', x)
+	})
+
+	movies.Search.forEach((movie) => {
+		movie.imdbRating =	ratingResp.filter((rating) => rating.imdbID === movie.imdbID)[0].imdbRating;
+	})
+
 };
 
 const init = async (title) => {
@@ -127,7 +137,7 @@ init('rabbit');
 const searchTitle = async (searchType) => {
 	loaderUpdate('none', 'block');
 	console.log('enter: ', inputTitle.value);
-	searchType === 'PROCEED' ? ++CURRENT_PAGE : CURRENT_PAGE = 1;
+	searchType === 'PROCEED' ? ++CURRENT_PAGE : (CURRENT_PAGE = 1);
 	let title = '';
 	inputTitle.value === '' ? (title = 'rabbit') : (title = inputTitle.value);
 	let translation = await getYandexTranslateURL({ text: title });
@@ -138,11 +148,16 @@ const searchTitle = async (searchType) => {
 		console.log('fillImdRating!!');
 		await fillImdRating(movies);
 		console.log('keypress: ', movies);
-		swiper.virtual.slides = [];
-		swiper.virtual.slides = createSlides(movies);
-		swiper.virtual.update(true);
+		if (searchType === 'NEW') {
+			swiper.virtual.slides = [];
+			swiper.virtual.slides = createSlides(movies);
+			swiper.virtual.update(true);
+			swiper.slideTo(0, 1)
+		}
+
 		if (searchType === 'PROCEED') {
-			swiper.slideTo(1, 0);
+			swiper.virtual.appendSlide(createSlides(movies));
+			swiper.virtual.update(true);
 		}
 		loaderUpdate('block', 'none');
 	} else {
