@@ -9,33 +9,58 @@
 	</head>
 	<body>
 		<header class="wrapper">
-			<article class="article">
-				<h1 class="article-title">Movie Search</h1>
-			</article>
+			<nav class="border split-nav">
+				<div class="nav-brand">
+					<h3><a href="#">Movie Search</a></h3>
+				</div>
+				<div class="collapsible">
+					<input id="collapsible1" type="checkbox" name="collapsible1">
+					<button>
+						<label for="collapsible1">
+							<div class="bar1"></div>
+							<div class="bar2"></div>
+						</label>
+					</button>
+					<div class="collapsible-body">
+						<ul class="inline">
+							<li><a href="https://rs.school/">Rs School</a></li>
+							<li><a href="https://github.com/LyssenkoAlex">Github</a></li>
+						</ul>
+					</div>
+				</div>
+			</nav>
 		</header>
 
-		<main class="wrapper">
-			<div class="form-group">
-				<div class="row">
-					<span class="text-input-wrapper">
-						<input type="text" placeholder="Enter movie title" required id="paperInputs1" autocomplete="off" />
-						<span title="Clear" class="clearButton">&times;</span>
-					</span>
+		<main class="wrapper search_wrapper">
 
-					<button class="btn-small" id="buttonSearch">Search</button>
-
-					<label for="paperChecks1" class="paper-check">
-						<input type="checkbox" name="paperChecks" id="paperChecks1" value="option 1" /> <span>RU</span>
-					</label>
-					<label for="paperChecks2" class="paper-check">
-						<input type="checkbox" name="paperChecks" id="paperChecks2" value="option 2" /> <span>ENG</span>
-					</label>
-					<h4 class="fondWrapper"><span>Found: </span><span class="foundItems"></span></h4>
-					<h3 class="okWrapper"><span class="badge success">OK</span></h3>
-					<div class="loader"></div>
-					<div class="not_found"></div>
+			<nav class="border split-nav">
+				<div class="nav-brand">
+					<div class="input_wrapper">
+					<input type="text" placeholder="Enter movie title" required id="paperInputs1" autocomplete="off" />
+					<button type="submit" class="magnifying" id="buttonSearch">&#x1F50D</button>
+					<button type="submit" class="clear_icon">X</button>
+					</div>
 				</div>
-			</div>
+				<div class="collapsible">
+					<input id="collapsible2" type="checkbox" name="collapsible1">
+					<button>
+						<label for="collapsible1">
+							<div class="bar1"></div>
+							<div class="bar2"></div>
+							<div class="bar3"></div>
+							<div class="bar4"></div>
+						</label>
+					</button>
+					<div class="collapsible-body">
+						<ul class="inline">
+							<li><a href="#" class="okWrapper">OK</a></li>
+							<li><a href="#" class="fondWrapper">Found:</a></li>
+							<li><a href="#" class="loader">Load</a></li>
+							<li><a href="#" class="not_found">Error</a></li>
+						</ul>
+					</div>
+				</div>
+			</nav>
 
 			<div class="swiper-container">
 				<div class="swiper-wrapper"></div>
@@ -47,7 +72,11 @@
 			</div>
 		</main>
 
-		<footer></footer>
+		<footer>
+			<div class="progress margin-bottom">
+				<div class="bar muted w-100"></div>
+			</div>
+		</footer>
 	</body>
 	<script src="./src/swiper/http_unpkg.com_swiper_js_swiper.js"></script>
 	<script src="./src/script.js" type="module"></script>

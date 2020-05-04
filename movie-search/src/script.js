@@ -1,4 +1,4 @@
-import { getOMDBInfo, getOMDBRating } from './api/omdb';
+import { getOMDBInfo } from './api/omdb';
 import { getYandexTranslateURL } from './api/translate';
 import {OMDB_URL} from "./constraints";
 
@@ -8,7 +8,7 @@ let swiper;
 const inputTitle = document.getElementById('paperInputs1');
 const buttonSearch = document.getElementById('buttonSearch');
 const fountTotal = document.querySelector('.foundItems');
-const clearButton = document.querySelector('.clearButton');
+const clearButton = document.querySelector('.clear_icon');
 
 const loader = document.querySelector('.loader');
 const ok = document.querySelector('.okWrapper');

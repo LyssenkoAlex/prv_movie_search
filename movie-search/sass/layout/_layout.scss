@@ -1,10 +1,18 @@
 .wrapper {
   margin: auto;
   width: 85%;
-  padding-top: 0.5em;
 }
 
 .area_wrapper {
   padding-top: 3em;
   text-align: center;
+}
+
+.search_wrapper {
+  margin-top: 35px;
+}
+
+.input_wrapper {
+  position: relative;
+  width: 50em;
 }

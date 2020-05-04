@@ -3569,12 +3569,20 @@ body {
 .wrapper {
   margin: auto;
   width: 85%;
-  padding-top: 0.5em;
 }
 
 .area_wrapper {
   padding-top: 3em;
   text-align: center;
+}
+
+.search_wrapper {
+  margin-top: 35px;
+}
+
+.input_wrapper {
+  position: relative;
+  width: 50em;
 }
 
 #paperInputs1 {
@@ -3591,6 +3599,33 @@ body {
 
 button {
   margin-left: 10px;
+}
+
+.magnifying {
+  background: transparent;
+  border: none;
+  display: inline-block;
+  position: absolute;
+  z-index: 2;
+  top: 3px;
+  right: -7px;
+  font-size: 0.6em;
+}
+
+input {
+  display: block;
+  width: 100%;
+}
+
+.clear_icon {
+  background: transparent;
+  border: none;
+  display: inline-block;
+  position: absolute;
+  z-index: 2;
+  top: 3px;
+  right: 43px;
+  font-size: 0.6em;
 }
 
 .fondWrapper {

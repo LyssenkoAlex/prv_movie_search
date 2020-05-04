@@ -11,6 +11,31 @@ button {
   margin-left: 10px;
 }
 
+.magnifying {
+  background: transparent;
+  border: none;
+  display: inline-block;
+  position: absolute;
+  z-index: 2;
+  top: 3px;
+  right: -7px;
+  font-size: 0.6em;
+}
+input {
+  display: block;
+  width: 100%;
+}
+
+.clear_icon{
+  background: transparent;
+  border: none;
+  display: inline-block;
+  position: absolute;
+  z-index: 2;
+  top: 3px;
+  right: 43px;
+  font-size: 0.6em;
+}
 .fondWrapper {
   margin-left: 10px;
 }
