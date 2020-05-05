@@ -84,7 +84,7 @@ const cursorPosition = () => {
 
 const startSlider = async (movies, title) => {
 	swiper = new Swiper('.swiper-container', {
-		slidesPerView: 4,
+		slidesPerView: 1,
 		spaceBetween: 50,
 		speed: 400,
 		watchSlidesVisibility: true,
@@ -99,6 +99,24 @@ const startSlider = async (movies, title) => {
 			el: '.swiper-pagination',
 			type: 'bullets'
 		},
+		breakpoints: {
+			320: {
+				slidesPerView: 1,
+				spaceBetween: 10,
+			},
+			414: {
+				slidesPerView: 2,
+				spaceBetween: 20,
+			},
+			768: {
+				slidesPerView: 4,
+				spaceBetween: 40,
+			},
+			1400: {
+				slidesPerView: 5,
+				spaceBetween: 50,
+			},
+		},
 		navigation: {
 			nextEl: '.swiper-button-next',
 			prevEl: '.swiper-button-prev'
@@ -108,7 +126,8 @@ const startSlider = async (movies, title) => {
 			slides: (function () {
 				return createSlides(movies);
 			})()
-		}
+		},
+
 	});
 	swiper.virtual.update(true);
 

@@ -1,6 +1,12 @@
 .wrapper {
+  max-width: $content-width;
   margin: auto;
-  width: 85%;
+  @include media-laptop {
+    padding: 0 20px;
+  }
+  @include media-mobile {
+    padding: 0 10px;
+  }
 }
 
 .area_wrapper {
