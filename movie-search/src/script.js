@@ -30,16 +30,22 @@ const loaderUpdate = (loaderCommand) => {
 
 const fillImdRating = async (movies) => {
 	let ratingURl = movies.Search.map((movie) => OMDB_URL + 'i=' + movie.imdbID);
-	let ratingResp = await Promise.all(
-		ratingURl.map(async (rating) => {
-			let response = await fetch(rating);
-			return response.json();
-		})
-	);
+	try {
+		let ratingResp = await Promise.all(
+			ratingURl.map(async (rating) => {
+				let response = await fetch(rating);
+				return response.json();
+			})
+		);
 
-	movies.Search.forEach((movie) => {
-		movie.imdbRating = ratingResp.filter((rating) => rating.imdbID === movie.imdbID)[0].imdbRating;
-	});
+		movies.Search.forEach((movie) => {
+			movie.imdbRating = ratingResp.filter((rating) => rating.imdbID === movie.imdbID)[0].imdbRating;
+		});
+	}
+	catch (e) {
+		loaderUpdate('error');
+		searchNote.innerHTML = `An error has happend`;
+	}
 };
 
 const init = async (title) => {
