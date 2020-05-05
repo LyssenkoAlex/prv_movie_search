@@ -1,52 +1,52 @@
 import { getOMDBInfo } from './api/omdb';
 import { getYandexTranslateURL } from './api/translate';
-import {OMDB_URL} from "./constraints";
+import { OMDB_URL } from './constraints';
 
 let CURRENT_PAGE = 1;
 let swiper;
 
 const inputTitle = document.getElementById('paperInputs1');
 const buttonSearch = document.getElementById('buttonSearch');
-const fountTotal = document.querySelector('.foundItems');
+const fountTotal = document.querySelector('.fondWrapper');
 const clearButton = document.querySelector('.clear_icon');
 
 const loader = document.querySelector('.loader');
 const ok = document.querySelector('.okWrapper');
 const not_found = document.querySelector('.not_found');
 
-const loaderUpdate = (okDisp, loaderDisp) => {
-	ok.style.display = okDisp;
-	loader.style.display = loaderDisp;
+const loaderUpdate = (loaderCommand) => {
+	if (loaderCommand === 'start') {
+		loader.style.animationDuration = '2s';
+		loader.style.borderTopColor = '#41403e';
+	} else if (loaderCommand === 'stop') {
+		loader.style.animationDuration = '0s';
+		loader.style.borderTopColor = '#8bc34a';
+	}
 };
 
 const fillImdRating = async (movies) => {
-	let ratingURl =  movies.Search.map((movie) => (OMDB_URL + 'i=' + movie.imdbID));
-	let ratingResp = await Promise.all(ratingURl.map( async rating => {
-		let response = await fetch(rating);
-		return response.json();
-	}));
-
-	ratingResp.forEach((x) => {
-		console.log('x: ', x)
-	})
+	let ratingURl = movies.Search.map((movie) => OMDB_URL + 'i=' + movie.imdbID);
+	let ratingResp = await Promise.all(
+		ratingURl.map(async (rating) => {
+			let response = await fetch(rating);
+			return response.json();
+		})
+	);
 
 	movies.Search.forEach((movie) => {
-		movie.imdbRating =	ratingResp.filter((rating) => rating.imdbID === movie.imdbID)[0].imdbRating;
-	})
-
+		movie.imdbRating = ratingResp.filter((rating) => rating.imdbID === movie.imdbID)[0].imdbRating;
+	});
 };
 
 const init = async (title) => {
-	console.log('init', title);
-	loaderUpdate('none', 'block');
+	loaderUpdate('start');
 	let movies = await getOMDBInfo({ title: title, page: CURRENT_PAGE });
 	if (movies.Search.length > 0) {
 		await fillImdRating(movies);
 		await startSlider(movies, title);
 		cursorPosition();
-		console.log('fountTotal', fountTotal);
-		fountTotal.innerHTML = movies.totalResults;
-		loaderUpdate('block', 'none');
+		fountTotal.innerHTML = `Found: ${movies.totalResults}`;
+		loaderUpdate('stop');
 	} else {
 		not_found.innerHTML = 'Nothing found!';
 	}
@@ -73,8 +73,6 @@ const cursorPosition = () => {
 };
 
 const startSlider = async (movies, title) => {
-	console.log('startSlider: ', movies, 'title: ', title);
-
 	swiper = new Swiper('.swiper-container', {
 		slidesPerView: 4,
 		spaceBetween: 50,
@@ -136,30 +134,28 @@ init('rabbit');
 
 const searchTitle = async (searchType) => {
 	loaderUpdate('none', 'block');
-	console.log('enter: ', inputTitle.value);
 	searchType === 'PROCEED' ? ++CURRENT_PAGE : (CURRENT_PAGE = 1);
 	let title = '';
 	inputTitle.value === '' ? (title = 'rabbit') : (title = inputTitle.value);
 	let translation = await getYandexTranslateURL({ text: title });
 	let translatedWord = translation.text[0];
-	console.log('translation', translation);
 	let movies = await getOMDBInfo({ title: translatedWord, page: CURRENT_PAGE });
 	if (movies.Search !== undefined && movies.Search.length > 0) {
-		console.log('fillImdRating!!');
+		loaderUpdate('start');
 		await fillImdRating(movies);
-		console.log('keypress: ', movies);
 		if (searchType === 'NEW') {
 			swiper.virtual.slides = [];
 			swiper.virtual.slides = createSlides(movies);
 			swiper.virtual.update(true);
-			swiper.slideTo(0, 1)
+			swiper.slideTo(0, 1);
 		}
 
 		if (searchType === 'PROCEED') {
 			swiper.virtual.appendSlide(createSlides(movies));
 			swiper.virtual.update(true);
 		}
-		loaderUpdate('block', 'none');
+		fountTotal.innerHTML = `Found: ${movies.totalResults}`;
+		loaderUpdate('stop');
 	} else {
 		not_found.innerHTML = 'Nothing found!';
 		fountTotal.innerHTML = '0';
