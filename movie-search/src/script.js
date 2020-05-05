@@ -11,8 +11,8 @@ const fountTotal = document.querySelector('.fondWrapper');
 const clearButton = document.querySelector('.clear_icon');
 
 const loader = document.querySelector('.loader');
-const ok = document.querySelector('.okWrapper');
 const not_found = document.querySelector('.not_found');
+const searchNote = document.querySelector('.searchNote');
 
 const loaderUpdate = (loaderCommand) => {
 	if (loaderCommand === 'start') {
@@ -21,6 +21,10 @@ const loaderUpdate = (loaderCommand) => {
 	} else if (loaderCommand === 'stop') {
 		loader.style.animationDuration = '0s';
 		loader.style.borderTopColor = '#8bc34a';
+	}
+	else if (loaderCommand === 'error') {
+		loader.style.animationDuration = '0s';
+		loader.style.borderTopColor = '#F44336';
 	}
 };
 
@@ -156,24 +160,36 @@ const searchTitle = async (searchType) => {
 		}
 		fountTotal.innerHTML = `Found: ${movies.totalResults}`;
 		loaderUpdate('stop');
+		searchNote.innerHTML = `Showing results for ${title}`;
 	} else {
 		not_found.innerHTML = 'Nothing found!';
 		fountTotal.innerHTML = '0';
-		swiper.virtual.slides = [];
-		swiper.virtual.update(true);
-		loaderUpdate('none', 'none');
+		loaderUpdate('error');
+		searchNote.innerHTML = `Nothing found for ${title}`;
 	}
 };
 
 inputTitle.addEventListener('keypress', async (e) => {
 	if (e.key === 'Enter') {
-		await searchTitle('NEW');
+		try {
+			await searchTitle('NEW');
+		}
+		catch (e) {
+			loaderUpdate('error');
+			searchNote.innerHTML = `Error has happend`;
+		}
 	}
 });
 
 buttonSearch.addEventListener('click', async (e) => {
 	CURRENT_PAGE = 1;
-	await searchTitle('NEW');
+	try {
+		await searchTitle('NEW');
+	}
+	catch (e) {
+		loaderUpdate('error');
+		searchNote.innerHTML = `Error has happend`;
+	}
 });
 
 inputTitle.addEventListener('keyup', (e) => {
