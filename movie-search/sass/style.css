@@ -3594,9 +3594,19 @@ body {
   position: relative;
   width: 50em;
 }
+@media (max-width: 320px) {
+  .input_wrapper {
+    width: 10em;
+  }
+}
 
 #paperInputs1 {
   margin-left: 10px;
+}
+@media (max-width: 320px) {
+  #paperInputs1 {
+    margin-left: 1px;
+  }
 }
 
 .paper-check {
@@ -3621,10 +3631,20 @@ button {
   right: -7px;
   font-size: 0.6em;
 }
+@media (max-width: 320px) {
+  .magnifying {
+    font-size: 0.4rem;
+  }
+}
 
 input {
   display: block;
   width: 100%;
+}
+@media (max-width: 320px) {
+  input {
+    font-size: 0.8rem;
+  }
 }
 
 .clear_icon {
@@ -3636,6 +3656,11 @@ input {
   top: 3px;
   right: 43px;
   font-size: 0.6em;
+}
+@media (max-width: 320px) {
+  .clear_icon {
+    font-size: 0.4rem;
+  }
 }
 
 .fondWrapper {
@@ -3662,6 +3687,12 @@ input {
   color: blue;
   font-weight: bold;
   visibility: hidden;
+}
+
+@media (max-width: 320px) {
+  nav div {
+    margin: 0.1em;
+  }
 }
 
 button {

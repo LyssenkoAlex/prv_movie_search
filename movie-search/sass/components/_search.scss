@@ -1,5 +1,8 @@
 #paperInputs1 {
   margin-left: 10px;
+  @include media-mobilesmall {
+    margin-left: 1px;
+  }
 }
 .paper-check {
   margin-left: 10px;
@@ -20,10 +23,16 @@ button {
   top: 3px;
   right: -7px;
   font-size: 0.6em;
+  @include media-mobilesmall {
+    font-size: 0.4rem;
+  }
 }
 input {
   display: block;
   width: 100%;
+  @include media-mobilesmall {
+    font-size: 0.8rem;
+  }
 }
 
 .clear_icon{
@@ -35,6 +44,9 @@ input {
   top: 3px;
   right: 43px;
   font-size: 0.6em;
+  @include media-mobilesmall {
+    font-size: 0.4rem;
+  }
 }
 .fondWrapper {
   margin-left: 10px;
@@ -58,4 +70,10 @@ input {
   color:blue;
   font-weight:bold;
   visibility:hidden;
+}
+
+nav div {
+  @include media-mobilesmall {
+    margin: 0.1em;
+  }
 }
