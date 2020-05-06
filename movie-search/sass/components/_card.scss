@@ -1,0 +1,11 @@
+.card .card-body {
+  @include media-mobilesmall {
+    padding: 0.25rem;
+  }
+}
+
+.card .card-body .card-subtitle, .card .card-body h5 {
+  @include media-mobilesmall {
+    margin-bottom: 0.1rem;
+  }
+}

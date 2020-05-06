@@ -3589,6 +3589,11 @@ body {
 .search_wrapper {
   margin-top: 35px;
 }
+@media (max-width: 320px) {
+  .search_wrapper {
+    margin-top: 5px;
+  }
+}
 
 .input_wrapper {
   position: relative;
@@ -3695,6 +3700,13 @@ input {
   }
 }
 
+@media (max-width: 320px) {
+  nav ul.inline li {
+    display: inline-block;
+    margin: 0;
+  }
+}
+
 button {
   background-color: #eee;
   border: 0;
@@ -3798,6 +3810,17 @@ button > span {
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+@media (max-width: 320px) {
+  .card .card-body {
+    padding: 0.25rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .card .card-body .card-subtitle, .card .card-body h5 {
+    margin-bottom: 0.1rem;
   }
 }
 

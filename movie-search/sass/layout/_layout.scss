@@ -16,6 +16,9 @@
 
 .search_wrapper {
   margin-top: 35px;
+  @include media-mobilesmall {
+    margin-top: 5px;
+  }
 }
 
 .input_wrapper {

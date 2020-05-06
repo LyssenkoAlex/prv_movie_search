@@ -77,3 +77,9 @@ nav div {
     margin: 0.1em;
   }
 }
+nav ul.inline li {
+  @include media-mobilesmall {
+    display: inline-block;
+    margin: 0;
+  }
+}
