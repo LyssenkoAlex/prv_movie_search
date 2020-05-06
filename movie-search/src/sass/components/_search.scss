@@ -1,0 +1,85 @@
+#paperInputs1 {
+  margin-left: 10px;
+  @include media-mobilesmall {
+    margin-left: 1px;
+  }
+}
+.paper-check {
+  margin-left: 10px;
+}
+.row {
+  align-items: baseline;
+}
+button {
+  margin-left: 10px;
+}
+
+.magnifying {
+  background: transparent;
+  border: none;
+  display: inline-block;
+  position: absolute;
+  z-index: 2;
+  top: 3px;
+  right: -7px;
+  font-size: 0.6em;
+  @include media-mobilesmall {
+    font-size: 0.4rem;
+  }
+}
+input {
+  display: block;
+  width: 100%;
+  @include media-mobilesmall {
+    font-size: 0.8rem;
+  }
+}
+
+.clear_icon{
+  background: transparent;
+  border: none;
+  display: inline-block;
+  position: absolute;
+  z-index: 2;
+  top: 3px;
+  right: 43px;
+  font-size: 0.6em;
+  @include media-mobilesmall {
+    font-size: 0.4rem;
+  }
+}
+.fondWrapper {
+  margin-left: 10px;
+}
+
+.text-input-wrapper {
+  border:1px solid;
+  padding:1px 6px 1px 1px;
+  display:inline-block;
+}
+.text-input-wrapper input {
+  border:none;
+  background:none;
+  outline:none;
+  padding:0 0;
+  margin:0 0;
+  font:inherit;
+}
+.text-input-wrapper span {
+  cursor:pointer;
+  color:blue;
+  font-weight:bold;
+  visibility:hidden;
+}
+
+nav div {
+  @include media-mobilesmall {
+    margin: 0.1em;
+  }
+}
+nav ul.inline li {
+  @include media-mobilesmall {
+    display: inline-block;
+    margin: 0;
+  }
+}

@@ -1,0 +1,30 @@
+.wrapper {
+  max-width: $content-width;
+  margin: auto;
+  @include media-laptop {
+    padding: 0 20px;
+  }
+  @include media-mobile {
+    padding: 0 10px;
+  }
+}
+
+.area_wrapper {
+  padding-top: 3em;
+  text-align: center;
+}
+
+.search_wrapper {
+  margin-top: 35px;
+  @include media-mobilesmall {
+    margin-top: 5px;
+  }
+}
+
+.input_wrapper {
+  position: relative;
+  width: 50em;
+  @include media-mobilesmall {
+    width: 10em;
+  }
+}
