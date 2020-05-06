@@ -1,3 +1,4 @@
+import Swiper from 'swiper';
 import { getOMDBInfo } from './api/omdb';
 import { getYandexTranslateURL } from './api/translate';
 import { OMDB_URL } from './constraints';
