@@ -21,8 +21,7 @@ const loaderUpdate = (loaderCommand) => {
 	} else if (loaderCommand === 'stop') {
 		loader.style.animationDuration = '0s';
 		loader.style.borderTopColor = '#8bc34a';
-	}
-	else if (loaderCommand === 'error') {
+	} else if (loaderCommand === 'error') {
 		loader.style.animationDuration = '0s';
 		loader.style.borderTopColor = '#F44336';
 	}
@@ -41,8 +40,7 @@ const fillImdRating = async (movies) => {
 		movies.Search.forEach((movie) => {
 			movie.imdbRating = ratingResp.filter((rating) => rating.imdbID === movie.imdbID)[0].imdbRating;
 		});
-	}
-	catch (e) {
+	} catch (e) {
 		loaderUpdate('error');
 		searchNote.innerHTML = `An error has happend`;
 	}
@@ -102,20 +100,20 @@ const startSlider = async (movies, title) => {
 		breakpoints: {
 			320: {
 				slidesPerView: 1,
-				spaceBetween: 10,
+				spaceBetween: 10
 			},
 			414: {
 				slidesPerView: 2,
-				spaceBetween: 20,
+				spaceBetween: 20
 			},
 			768: {
 				slidesPerView: 4,
-				spaceBetween: 40,
+				spaceBetween: 40
 			},
 			1400: {
 				slidesPerView: 5,
-				spaceBetween: 50,
-			},
+				spaceBetween: 50
+			}
 		},
 		navigation: {
 			nextEl: '.swiper-button-next',
@@ -126,8 +124,7 @@ const startSlider = async (movies, title) => {
 			slides: (function () {
 				return createSlides(movies);
 			})()
-		},
-
+		}
 	});
 	swiper.virtual.update(true);
 
@@ -198,8 +195,7 @@ inputTitle.addEventListener('keypress', async (e) => {
 	if (e.key === 'Enter') {
 		try {
 			await searchTitle('NEW');
-		}
-		catch (e) {
+		} catch (e) {
 			loaderUpdate('error');
 			searchNote.innerHTML = `Error has happend`;
 		}
@@ -210,8 +206,7 @@ buttonSearch.addEventListener('click', async (e) => {
 	CURRENT_PAGE = 1;
 	try {
 		await searchTitle('NEW');
-	}
-	catch (e) {
+	} catch (e) {
 		loaderUpdate('error');
 		searchNote.innerHTML = `Error has happend`;
 	}
