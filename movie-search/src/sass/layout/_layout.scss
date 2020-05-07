@@ -27,4 +27,8 @@
   @include media-mobilesmall {
     width: 10em;
   }
+  @include mobile-middle-width {
+    width: 25em;
+  }
+
 }

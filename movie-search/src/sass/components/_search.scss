@@ -33,6 +33,13 @@ input {
   @include media-mobilesmall {
     font-size: 0.8rem;
   }
+  @include media-mobilesmall {
+    font-size: 0.8rem;
+    width: 25em;
+  }
+  @include mobile-middle-width {
+    width: 25em;
+  }
 }
 
 .clear_icon{
