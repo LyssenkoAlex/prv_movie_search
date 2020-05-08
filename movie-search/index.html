@@ -1,80 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-		<title>Movie Search</title>
-	</head>
-	<body>
-		<header class="wrapper">
-			<nav class="border split-nav">
-				<div class="nav-brand">
-					<h3><a href="#">Movie Search</a></h3>
-				</div>
-				<div class="collapsible">
-					<input id="collapsible1" type="checkbox" name="collapsible1">
-					<button>
-						<label for="collapsible1">
-							<div class="bar1"></div>
-							<div class="bar2"></div>
-						</label>
-					</button>
-					<div class="collapsible-body">
-						<ul class="inline">
-							<li><a href="https://rs.school/">Rs School</a></li>
-							<li><a href="https://github.com/LyssenkoAlex">Github</a></li>
-						</ul>
-					</div>
-				</div>
-			</nav>
-		</header>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Movie Search</title>
+</head>
+<body>
+<div class="grid">
+    <header>
+        <nav class="border split-nav">
+            <div class="nav-brand">
+                <h3><a href="#">Movie Search</a></h3>
+            </div>
+            <div class="collapsible">
+                <input id="collapsible1" type="checkbox" name="collapsible1">
+                <button>
+                    <label for="collapsible1">
+                        <div class="bar1"></div>
+                        <div class="bar2"></div>
+                    </label>
+                </button>
+                <div class="collapsible-body">
+                    <ul class="inline">
+                        <li><a href="https://rs.school/">Rs School</a></li>
+                        <li><a href="https://github.com/LyssenkoAlex">Github</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <aside>
+        &nbsp;
+    </aside>
 
-		<main class="wrapper search_wrapper">
 
-			<nav class="border split-nav">
-				<div class="nav-brand">
-					<div class="input_wrapper">
-					<input type="text" placeholder="Enter movie title" required id="paperInputs1" autocomplete="off" />
-					<button type="submit" class="magnifying" id="buttonSearch">&#x1F50D</button>
-					<button type="submit" class="clear_icon">X</button>
-					</div>
-				</div>
-				<div class="collapsible">
-					<input id="collapsible2" type="checkbox" name="collapsible1">
-					<button>
-						<label for="collapsible2">
-							<div class="bar1"></div>
-							<div class="bar2"></div>
-							<div class="bar3"></div>
-						</label>
-					</button>
-					<div class="collapsible-body">
-						<ul class="inline">
-							<li><a href="#" class="fondWrapper"></a></li>
-							<li><div class="loader"></div></li>
-							<li><a href="#" class="not_found"></a></li>
-						</ul>
-					</div>
-				</div>
-			</nav>
+    <article>
+        <nav class="border split-nav">
+            <div class="nav-brand">
+                <div class="input-icon-wrap">
+                    <span class="input-icon" id="buttonSearch">&#x1F50D</span>
+                    <span class="clear_icon">X</span>
+                    <input type="text" class="input-with-icon" placeholder="Enter movie title" required
+                           id="paperInputs1" autocomplete="off"/>
+                </div>
+            </div>
+            <div class="collapsible">
+                <input id="collapsible2" type="checkbox" name="collapsible1">
+                <button>
+                    <label for="collapsible2">
+                        <div class="bar1"></div>
+                        <div class="bar2"></div>
+                        <div class="bar3"></div>
+                    </label>
+                </button>
+                <div class="collapsible-body">
+                    <ul class="inline">
+                        <li><a href="#" class="fondWrapper"></a></li>
+                        <li>
+                            <div class="loader"></div>
+                        </li>
+                        <li><a href="#" class="not_found"></a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="layout">
+            <div class="swiper-container">
+                <div class="swiper-wrapper"></div>
+                <div class="swiper-pagination"></div>
 
-			<div class="swiper-container">
-				<div class="swiper-wrapper"></div>
-				<!-- Add Pagination -->
-				<div class="swiper-pagination"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+        </div>
+    </article>
 
-				<div class="swiper-button-prev"></div>
-				<div class="swiper-button-next"></div>
-			</div>
-		</main>
+    <aside>
+        &nbsp;
+    </aside>
 
-		<footer>
-			<div class="progress margin-bottom">
-				<div class="bar muted w-100 fixed">
-					<h5><span class="searchNote"></span></h5>
-				</div>
-			</div>
-		</footer>
-	</body>
+    <footer>
+        <div class="progress margin-bottom">
+            <div class="bar muted w-100 fixed">
+                <h5><span class="searchNote"></span></h5>
+            </div>
+        </div>
+    </footer>
+</div>
+</body>
 </html>

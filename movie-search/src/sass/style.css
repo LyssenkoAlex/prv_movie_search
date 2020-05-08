@@ -3566,48 +3566,72 @@ body {
   src: local("Patrick Hand SC"), local("PatrickHandSC-Regular"), url(./fonts/0nkwC9f7MfsBiWcLtY65AWDK873ljiK7.woff2) format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
-.wrapper {
-  max-width: 1400px;
-  margin: auto;
-}
-@media (max-width: 1400px) {
-  .wrapper {
-    padding: 0 20px;
-  }
-}
-@media (max-width: 414px) {
-  .wrapper {
-    padding: 0 10px;
-  }
+body {
+  margin: 0 auto;
+  padding: 1em;
 }
 
-.area_wrapper {
-  padding-top: 3em;
-  text-align: center;
+.grid {
+  display: grid;
+  grid-template-columns: 0.1fr auto 0.1fr;
+  grid-gap: 1em;
 }
 
-.search_wrapper {
-  margin-top: 35px;
-}
-@media (max-width: 320px) {
-  .search_wrapper {
-    margin-top: 5px;
-  }
+header, footer {
+  grid-column: 1/4;
 }
 
-.input_wrapper {
-  position: relative;
-  width: 50em;
-}
-@media (max-width: 320px) {
-  .input_wrapper {
-    width: 10em;
+@media all and (max-width: 700px) {
+  aside,
+article {
+    grid-column: 1/4;
   }
 }
-@media (max-width: 720px) {
-  .input_wrapper {
-    width: 25em;
-  }
+article {
+  flex-flow: column;
+}
+
+header,
+aside,
+footer {
+  display: flex;
+  justify-content: center;
+}
+
+.layout {
+  display: grid;
+}
+
+.swiper-container {
+  grid-column: 3/10;
+  width: 100%;
+}
+
+.nav-brand {
+  width: 80%;
+}
+
+.input-icon-wrap {
+  border: 1px solid #ddd;
+  display: flex;
+  flex-direction: row;
+}
+
+.input-icon, .clear_icon {
+  background: #ddd;
+}
+
+.input-with-icon {
+  border: none;
+  flex: 1;
+}
+
+.input-icon, .clear_icon, .input-with-icon {
+  padding: 10px;
+}
+
+.clear_icon {
+  border: 1px solid #948e8e;
 }
 
 #paperInputs1 {
@@ -3631,83 +3655,8 @@ button {
   margin-left: 10px;
 }
 
-.magnifying {
-  background: transparent;
-  border: none;
-  display: inline-block;
-  position: absolute;
-  z-index: 2;
-  top: 3px;
-  right: -7px;
-  font-size: 0.6em;
-}
-@media (max-width: 320px) {
-  .magnifying {
-    font-size: 0.4rem;
-  }
-}
-
-input {
-  display: block;
-  width: 100%;
-}
-@media (max-width: 320px) {
-  input {
-    font-size: 0.8rem;
-  }
-}
-@media (max-width: 320px) {
-  input {
-    font-size: 0.8rem;
-    width: 25em;
-  }
-}
-@media (max-width: 720px) {
-  input {
-    width: 25em;
-  }
-}
-
-.clear_icon {
-  background: transparent;
-  border: none;
-  display: inline-block;
-  position: absolute;
-  z-index: 2;
-  top: 3px;
-  right: 43px;
-  font-size: 0.6em;
-}
-@media (max-width: 320px) {
-  .clear_icon {
-    font-size: 0.4rem;
-  }
-}
-
 .fondWrapper {
   margin-left: 10px;
-}
-
-.text-input-wrapper {
-  border: 1px solid;
-  padding: 1px 6px 1px 1px;
-  display: inline-block;
-}
-
-.text-input-wrapper input {
-  border: none;
-  background: none;
-  outline: none;
-  padding: 0 0;
-  margin: 0 0;
-  font: inherit;
-}
-
-.text-input-wrapper span {
-  cursor: pointer;
-  color: blue;
-  font-weight: bold;
-  visibility: hidden;
 }
 
 @media (max-width: 320px) {

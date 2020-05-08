@@ -7,7 +7,7 @@ let CURRENT_PAGE = 1;
 let swiper;
 
 const inputTitle = document.getElementById('paperInputs1');
-const buttonSearch = document.getElementById('buttonSearch');
+const buttonSearch = document.querySelector('.input-icon');
 const fountTotal = document.querySelector('.fondWrapper');
 const clearButton = document.querySelector('.clear_icon');
 
@@ -22,6 +22,7 @@ const loaderUpdate = (loaderCommand) => {
 	} else if (loaderCommand === 'stop') {
 		loader.style.animationDuration = '0s';
 		loader.style.borderTopColor = '#8bc34a';
+		searchNote.innerHTML = ``;
 	} else if (loaderCommand === 'error') {
 		loader.style.animationDuration = '0s';
 		loader.style.borderTopColor = '#F44336';
@@ -56,6 +57,7 @@ const init = async (title) => {
 		cursorPosition();
 		fountTotal.innerHTML = `Found: ${movies.totalResults}`;
 		loaderUpdate('stop');
+		searchNote.innerHTML = `Showing results for ${title}`;
 	} else {
 		not_found.innerHTML = 'Nothing found!';
 	}
@@ -202,7 +204,7 @@ inputTitle.addEventListener('keypress', async (e) => {
 			await searchTitle('NEW');
 		} catch (e) {
 			loaderUpdate('error');
-			searchNote.innerHTML = `Error has happend`;
+			searchNote.innerHTML = `Error has happened`;
 		}
 	}
 });
@@ -213,7 +215,7 @@ buttonSearch.addEventListener('click', async (e) => {
 		await searchTitle('NEW');
 	} catch (e) {
 		loaderUpdate('error');
-		searchNote.innerHTML = `Error has happend`;
+		searchNote.innerHTML = `Error has happened`;
 	}
 });
 
