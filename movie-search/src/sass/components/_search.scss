@@ -26,9 +26,7 @@
 
 #paperInputs1 {
   margin-left: 10px;
-  @include media-mobilesmall {
-    margin-left: 1px;
-  }
+
 }
 .paper-check {
   margin-left: 10px;
@@ -42,20 +40,4 @@ button {
 
 
 
-.fondWrapper {
-  margin-left: 10px;
-}
 
-
-
-nav div {
-  @include media-mobilesmall {
-    margin: 0.1em;
-  }
-}
-nav ul.inline li {
-  @include media-mobilesmall {
-    display: inline-block;
-    margin: 0;
-  }
-}

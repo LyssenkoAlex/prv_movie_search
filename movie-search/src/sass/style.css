@@ -3637,11 +3637,6 @@ footer {
 #paperInputs1 {
   margin-left: 10px;
 }
-@media (max-width: 320px) {
-  #paperInputs1 {
-    margin-left: 1px;
-  }
-}
 
 .paper-check {
   margin-left: 10px;
@@ -3653,23 +3648,6 @@ footer {
 
 button {
   margin-left: 10px;
-}
-
-.fondWrapper {
-  margin-left: 10px;
-}
-
-@media (max-width: 320px) {
-  nav div {
-    margin: 0.1em;
-  }
-}
-
-@media (max-width: 320px) {
-  nav ul.inline li {
-    display: inline-block;
-    margin: 0;
-  }
 }
 
 button {
@@ -3775,17 +3753,6 @@ button > span {
   }
   100% {
     transform: rotate(360deg);
-  }
-}
-@media (max-width: 320px) {
-  .card .card-body {
-    padding: 0.25rem;
-  }
-}
-
-@media (max-width: 320px) {
-  .card .card-body .card-subtitle, .card .card-body h5 {
-    margin-bottom: 0.1rem;
   }
 }
 
