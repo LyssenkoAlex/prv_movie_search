@@ -2298,12 +2298,7 @@ nav ul.inline li {
   display: inline-block;
   margin: 0 .5rem
 }
-@media only screen and (max-width:768px) {
-  nav ul.inline li {
-    display: block;
-    margin: 1rem 0
-  }
-}
+
 nav a {
   background-image: none;
   border-bottom: 5px solid #41403e;
