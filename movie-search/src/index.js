@@ -1,6 +1,6 @@
 import Swiper from 'swiper';
 import { getOMDBInfo } from './api/omdb';
-import { getYandexTranslateURL } from './api/translate';
+import getYandexTranslateURL from './api/translate';
 import { OMDB_URL } from './constraints';
 
 let CURRENT_PAGE = 1;
@@ -14,17 +14,20 @@ const clearButton = document.querySelector('.clear_icon');
 const loader = document.querySelector('.loader');
 const searchNote = document.querySelector('.searchNote');
 
-const loaderUpdate = (loaderCommand) => {
+const loaderUpdate = (loaderCommand, message) => {
 	if (loaderCommand === 'start') {
 		loader.style.animationDuration = '2s';
 		loader.style.borderTopColor = '#41403e';
 	} else if (loaderCommand === 'stop') {
 		loader.style.animationDuration = '0s';
 		loader.style.borderTopColor = '#8bc34a';
+		fountTotal.innerHTML = message;
 		searchNote.innerHTML = ``;
 	} else if (loaderCommand === 'error') {
 		loader.style.animationDuration = '0s';
 		loader.style.borderTopColor = '#F44336';
+		searchNote.innerHTML = message;
+		fountTotal.innerHTML = 'Found: 0';
 	}
 };
 
@@ -43,8 +46,7 @@ const fillImdRating = async (movies) => {
 			movie.imdbRating = ratingResp.filter((rating) => rating.imdbID === movie.imdbID)[0].imdbRating;
 		});
 	} catch (e) {
-		loaderUpdate('error');
-		searchNote.innerHTML = `An error has happend`;
+		loaderUpdate('error', 'An error has happend');
 	}
 };
 
@@ -68,16 +70,16 @@ const createSlides = (movies) => {
 };
 
 const searchTitle = async (searchType) => {
-	loaderUpdate('none', 'block');
-	// eslint-disable-next-line no-plusplus
+	loaderUpdate('start');
+	// eslint-disable-next-line no-plusplus,no-unused-expressions
 	searchType === 'PROCEED' ? ++CURRENT_PAGE : (CURRENT_PAGE = 1);
 	let title = '';
+	// eslint-disable-next-line no-unused-expressions
 	inputTitle.value === '' ? (title = 'rabbit') : (title = inputTitle.value);
 	const translation = await getYandexTranslateURL({ text: title });
 	const translatedWord = translation.text[0];
 	const movies = await getOMDBInfo({ title: translatedWord, page: CURRENT_PAGE });
 	if (movies.Search !== undefined && movies.Search.length > 0) {
-		loaderUpdate('start');
 		await fillImdRating(movies);
 		if (searchType === 'NEW') {
 			swiper.virtual.slides = [];
@@ -90,12 +92,11 @@ const searchTitle = async (searchType) => {
 			swiper.virtual.appendSlide(createSlides(movies));
 			swiper.virtual.update(true);
 		}
-		fountTotal.innerHTML = `Found: ${movies.totalResults}`;
-		loaderUpdate('stop');
+		// fountTotal.innerHTML = `Found: ${movies.totalResults}`;
+		loaderUpdate('stop', `Found: ${movies.totalResults}`);
 		searchNote.innerHTML = `Showing results for ${title}`;
 	} else {
-		fountTotal.innerHTML = 'Nothing found!';
-		loaderUpdate('error');
+		loaderUpdate('error', 'Nothing found!');
 		searchNote.innerHTML = `Nothing found for ${title}`;
 	}
 };
@@ -145,7 +146,7 @@ const startSlider = async (movies, title) => {
 		},
 		virtual: {
 			cache: false,
-			slides: (function () {
+			slides: (() => {
 				return createSlides(movies);
 			})()
 		}
@@ -190,11 +191,12 @@ const init = async (title) => {
 		await fillImdRating(movies);
 		await startSlider(movies, title);
 		cursorPosition();
-		fountTotal.innerHTML = `Found: ${movies.totalResults}`;
-		loaderUpdate('stop');
+		// fountTotal.innerHTML = `Found: ${movies.totalResults}`;
+		loaderUpdate('stop', `Found: ${movies.totalResults}`);
 		searchNote.innerHTML = `Showing results for ${title}`;
 	} else {
-		fountTotal.innerHTML = 'Nothing found!';
+		// fountTotal.innerHTML = 'Nothing found!';
+		loaderUpdate('error', 'Nothing found!');
 	}
 };
 
@@ -205,8 +207,8 @@ inputTitle.addEventListener('keypress', async (e) => {
 		try {
 			await searchTitle('NEW');
 		} catch (error) {
-			loaderUpdate('error');
-			searchNote.innerHTML = `Error has happened`;
+			loaderUpdate('error', `Error has happened`);
+			// searchNote.innerHTML = `Error has happened`;
 		}
 	}
 });
@@ -217,7 +219,8 @@ buttonSearch.addEventListener('click', async () => {
 		await searchTitle('NEW');
 	} catch (error) {
 		loaderUpdate('error');
-		searchNote.innerHTML = `Error has happened`;
+		// searchNote.innerHTML = `Error has happened`;
+		loaderUpdate('error', `Error has happened`);
 	}
 });
 
