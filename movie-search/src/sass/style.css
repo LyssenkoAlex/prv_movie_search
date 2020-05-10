@@ -3572,6 +3572,11 @@ body {
   grid-gap: 1em;
 }
 
+.nav_wrapper {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+
 header, footer {
   grid-column: 1/4;
 }
@@ -3580,6 +3585,10 @@ header, footer {
   aside,
 article {
     grid-column: 1/4;
+  }
+
+  .nav_wrapper {
+    grid-template-columns: 1fr;
   }
 }
 article {
@@ -3602,10 +3611,6 @@ footer {
   width: 100%;
 }
 
-.nav-brand {
-  width: 80%;
-}
-
 .input-icon-wrap {
   border: 1px solid #ddd;
   display: flex;
@@ -3614,6 +3619,7 @@ footer {
 
 .input-icon, .clear_icon {
   background: #ddd;
+  padding: 1em;
 }
 
 .input-with-icon {
@@ -3623,10 +3629,6 @@ footer {
 
 .clear_icon {
   border: 1px solid #948e8e;
-}
-
-#paperInputs1 {
-  margin-left: 10px;
 }
 
 .paper-check {

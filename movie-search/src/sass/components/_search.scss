@@ -1,6 +1,6 @@
-.nav-brand {
-  width: 80%;
-}
+//.nav-brand {
+//  width: 80%;
+//}
 
 .input-icon-wrap {
   border: 1px solid #ddd;
@@ -10,6 +10,7 @@
 
 .input-icon, .clear_icon {
   background: #ddd;
+  padding: 1em;
 }
 
 .input-with-icon {
@@ -20,12 +21,9 @@
 
 .clear_icon {
   border: 1px solid #948e8e;
-}
-
-#paperInputs1 {
-  margin-left: 10px;
 
 }
+
 .paper-check {
   margin-left: 10px;
 }
