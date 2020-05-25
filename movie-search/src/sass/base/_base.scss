@@ -9,5 +9,15 @@ body {
   font-size: 62.5%;
 }
 
+li {
+  background-image: none;
+  border-bottom-left-radius: 15px 3px;
+  border-bottom-right-radius: 15px 5px;
+  color: rgb(65, 64, 62);
+  padding-bottom: 0.1rem;
+  border-bottom: 5px solid rgb(65, 64, 62);
+  font-size: 2em;
+  font-family:  Neucha, sans-serif;
+}
 
 

@@ -1,7 +1,8 @@
 import Swiper from 'swiper';
 import { getOMDBInfo } from './api/omdb';
 import getYandexTranslateURL from './api/translate';
-import { OMDB_URL } from './constraints';
+import { DEFAULT_SEARCH_VALUE, OMDB_URL } from './constraints';
+import imgNotFound from './assets/image-not-found.svg';
 
 let CURRENT_PAGE = 1;
 let swiper;
@@ -75,10 +76,11 @@ const searchTitle = async (searchType) => {
 	searchType === 'PROCEED' ? ++CURRENT_PAGE : (CURRENT_PAGE = 1);
 	let title = '';
 	// eslint-disable-next-line no-unused-expressions
-	inputTitle.value === '' ? (title = 'rabbit') : (title = inputTitle.value);
+	inputTitle.value === '' ? (title = DEFAULT_SEARCH_VALUE) : (title = inputTitle.value);
 	const translation = await getYandexTranslateURL({ text: title });
 	const translatedWord = translation.text[0];
 	const movies = await getOMDBInfo({ title: translatedWord, page: CURRENT_PAGE });
+
 	if (movies.Search !== undefined && movies.Search.length > 0) {
 		await fillImdRating(movies);
 		if (searchType === 'NEW') {
@@ -92,9 +94,8 @@ const searchTitle = async (searchType) => {
 			swiper.virtual.appendSlide(createSlides(movies));
 			swiper.virtual.update(true);
 		}
-		// fountTotal.innerHTML = `Found: ${movies.totalResults}`;
 		loaderUpdate('stop', `Found: ${movies.totalResults}`);
-		searchNote.innerHTML = `Showing results for ${title}`;
+		searchNote.innerHTML = `Showing results for ${translatedWord}`;
 	} else {
 		loaderUpdate('error', 'Nothing found!');
 		searchNote.innerHTML = `Nothing found for ${title}`;
@@ -155,7 +156,7 @@ const startSlider = async (movies, title) => {
 
 	swiper.on('reachEnd', async () => {
 		if (inputTitle.value === '') {
-			title = 'rabbit';
+			title = DEFAULT_SEARCH_VALUE;
 		} else {
 			title = inputTitle.value;
 		}
@@ -165,7 +166,6 @@ const startSlider = async (movies, title) => {
 
 const cursorPosition = () => {
 	const setCaretPosition = (ctrl, pos) => {
-		// Modern browsers
 		if (ctrl.setSelectionRange) {
 			ctrl.focus();
 			ctrl.setSelectionRange(pos, pos);
@@ -191,16 +191,14 @@ const init = async (title) => {
 		await fillImdRating(movies);
 		await startSlider(movies, title);
 		cursorPosition();
-		// fountTotal.innerHTML = `Found: ${movies.totalResults}`;
 		loaderUpdate('stop', `Found: ${movies.totalResults}`);
 		searchNote.innerHTML = `Showing results for ${title}`;
 	} else {
-		// fountTotal.innerHTML = 'Nothing found!';
 		loaderUpdate('error', 'Nothing found!');
 	}
 };
 
-init('rabbit');
+init(DEFAULT_SEARCH_VALUE);
 
 inputTitle.addEventListener('keypress', async (e) => {
 	if (e.key === 'Enter') {
@@ -208,7 +206,6 @@ inputTitle.addEventListener('keypress', async (e) => {
 			await searchTitle('NEW');
 		} catch (error) {
 			loaderUpdate('error', `Error has happened`);
-			// searchNote.innerHTML = `Error has happened`;
 		}
 	}
 });
@@ -219,7 +216,6 @@ buttonSearch.addEventListener('click', async () => {
 		await searchTitle('NEW');
 	} catch (error) {
 		loaderUpdate('error');
-		// searchNote.innerHTML = `Error has happened`;
 		loaderUpdate('error', `Error has happened`);
 	}
 });

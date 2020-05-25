@@ -3521,6 +3521,17 @@ body {
   font-size: 62.5%;
 }
 
+li {
+  background-image: none;
+  border-bottom-left-radius: 15px 3px;
+  border-bottom-right-radius: 15px 5px;
+  color: #41403e;
+  padding-bottom: 0.1rem;
+  border-bottom: 5px solid #41403e;
+  font-size: 2em;
+  font-family: Neucha, sans-serif;
+}
+
 /* cyrillic */
 @font-face {
   font-family: "Neucha";
@@ -3674,6 +3685,10 @@ nav .collapsible > button {
   height: 20px;
 }
 
+.image_container {
+  object-fit: contain;
+}
+
 .loader {
   border-radius: 50%;
   border-top: 16px solid #41403e;
@@ -3682,6 +3697,10 @@ nav .collapsible > button {
   -webkit-animation: spin 2s linear infinite;
   /* Safari */
   animation: spin 2s linear infinite;
+}
+
+.loader_container {
+  border-bottom: none;
 }
 
 /* Safari */
