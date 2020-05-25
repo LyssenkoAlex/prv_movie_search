@@ -54,10 +54,11 @@ const fillImdRating = async (movies) => {
 const createSlides = (movies) => {
 	const slides = [];
 	for (let i = 0; i < movies.Search.length; i += 1) {
+		const imgSrc = movies.Search[i].Poster === 'N/A' ? imgNotFound : movies.Search[i].Poster;
 		slides.push(`
 				<div class="swiper-slide">
 					<div class="card">
-					<img src="${movies.Search[i].Poster}" alt="${movies.Search[i].Title}"/>
+					<img src="${imgSrc}" alt="${movies.Search[i].Title}" class="image_container"/>
 					<div class="card-body">
 						<a class="paper-btn btn-secondary" href="https://www.imdb.com/title/${movies.Search[i].imdbID}" target="_blank">${movies.Search[i].Title}</a>
 						<h5 class="card-subtitle">${movies.Search[i].Type} ${movies.Search[i].Year}</h5>
